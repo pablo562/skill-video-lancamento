@@ -1,0 +1,16 @@
+{
+  "name": "video-lancamento",
+  "owner": {
+    "name": "Pablo Fernandes"
+  },
+  "metadata": {
+    "description": "Skill do Claude Code para vídeos curtos de lançamento de produto, feitos com JavaScript, Playwright e ffmpeg."
+  },
+  "plugins": [
+    {
+      "name": "video-lancamento",
+      "source": "./plugins/video-lancamento",
+      "description": "Vídeos curtos de lançamento de produto (16:9 ou 9:16, com ou sem narração) feitos com JavaScript, Playwright e ffmpeg, com trilha sintetizada."
+    }
+  ]
+}

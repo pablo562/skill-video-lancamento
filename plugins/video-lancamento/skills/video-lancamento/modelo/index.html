@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Lançamento</title>
+<link rel="stylesheet" href="assets/fonts/fonts.css">
+<link rel="stylesheet" href="motor/base.css">
+<link rel="stylesheet" href="marca.css">
+<style>
+  /* ---------- Cena 2: título ---------- */
+  #redwipe { position: absolute; inset: 0; background: var(--destaque); }
+  #s2grupo { position: absolute; inset: 0; transform-origin: 50% 50%; }
+  #apresentando { position: absolute; left: 0; right: 0; top: 312px; text-align: center; color: #fff; font-weight: 600; font-size: 40px; }
+  #selo { position: absolute; background: var(--escuro); color: #fff; font-weight: 800; font-size: 34px; padding: 10px 22px 12px; border-radius: 999px; transform-origin: 30% 80%; }
+  #cobre { position: absolute; inset: 0; background: var(--claro); overflow: hidden; }
+
+  /* ---------- Cena 3: janela de navegador ---------- */
+  #win { position: absolute; left: 220px; top: 200px; width: 1480px; height: 830px; border-radius: 18px; background: #fff; border: 1px solid var(--borda); box-shadow: 0 40px 90px -30px rgba(18,18,18,.35), 0 8px 24px -10px rgba(18,18,18,.18); overflow: hidden; transform-origin: 50% 60%; }
+  .chrome { position: absolute; left: 0; right: 0; top: 0; height: 52px; background: #F7F7F4; border-bottom: 1px solid #E8E8E2; }
+  .chrome .dot { position: absolute; top: 19px; width: 13px; height: 13px; border-radius: 50%; background: #DADAD4; }
+  #urlpill { position: absolute; left: 460px; top: 10px; width: 560px; height: 32px; border-radius: 9px; background: #EDEDE8; display: flex; align-items: center; justify-content: center; gap: 8px; font-family: var(--fonte-mono); font-size: 16px; color: #3A3A36; }
+  #urlpill svg { width: 15px; height: 15px; color: #8A8A82; }
+  #caret { display: inline-block; width: 2px; height: 18px; background: var(--escuro); vertical-align: -3px; margin-left: 1px; }
+  #urlbar { position: absolute; left: 0; bottom: 0; height: 3px; background: var(--destaque); }
+  .content { position: absolute; left: 0; right: 0; top: 52px; bottom: 0; overflow: hidden; background: #fff; }
+  #bigurl { position: absolute; left: 0; right: 0; top: 300px; text-align: center; font-family: var(--fonte-mono); font-size: 72px; font-weight: 500; letter-spacing: -0.02em; }
+  #bigurl .dom { color: var(--destaque); }
+  #bigcaret { display: inline-block; width: 6px; height: 78px; background: var(--destaque); vertical-align: -12px; margin-left: 4px; }
+  /* página de exemplo: troque pelo produto de verdade */
+  #pagina { position: absolute; inset: 0; }
+  .pg-header { height: 80px; display: flex; align-items: center; padding: 0 48px; border-bottom: 1px solid #EDEDE8; font-weight: 900; font-size: 28px; letter-spacing: -0.03em; }
+  .pg-card { position: absolute; left: 48px; right: 48px; top: 120px; height: 520px; border-radius: 24px; background: #F6E7CF; padding: 64px; }
+  .pg-kicker { font-weight: 800; font-size: 16px; letter-spacing: .14em; text-transform: uppercase; color: var(--destaque); }
+  .pg-h { font-weight: 900; font-size: 96px; letter-spacing: -0.04em; line-height: .95; margin-top: 14px; }
+  .pg-sub { font-size: 26px; font-weight: 500; opacity: .7; margin-top: 18px; }
+  #pgBotao { display: inline-block; margin-top: 36px; background: var(--escuro); color: #fff; font-weight: 800; font-size: 24px; padding: 20px 34px; border-radius: 14px; transform-origin: 50% 50%; }
+  #toast { position: absolute; left: 50%; top: 18px; transform: translateX(-50%); background: var(--escuro); color: #fff; border-radius: 14px; padding: 14px 22px 14px 16px; display: flex; align-items: center; gap: 12px; font-weight: 800; font-size: 19px; box-shadow: 0 20px 40px -12px rgba(0,0,0,.4); opacity: 0; }
+  #toast i { width: 30px; height: 30px; border-radius: 50%; background: #1B8455; display: flex; align-items: center; justify-content: center; }
+  #toast svg { width: 18px; height: 18px; color: #fff; stroke-width: 3; }
+
+  /* ---------- Cena 4: rajada ---------- */
+  .blz { position: absolute; inset: 0; display: none; }
+  .blz .in { position: absolute; left: 0; right: 0; top: 330px; text-align: center; transform-origin: 50% 60%; }
+  .blz svg.ic { width: 150px; height: 150px; stroke-width: 1.7; }
+  .blz .tx { font-weight: 900; font-size: 150px; letter-spacing: -0.045em; line-height: 1; margin-top: 26px; }
+  #blzTag { position: absolute; left: 80px; top: 70px; font-weight: 800; font-size: 30px; }
+  #blzDots { position: absolute; left: 0; right: 0; bottom: 80px; display: flex; justify-content: center; gap: 14px; }
+  #blzDots i { width: 14px; height: 14px; border-radius: 50%; display: block; }
+
+  /* ---------- Cena 5: fechamento ---------- */
+  #endUrl { position: absolute; left: 0; right: 0; top: 668px; text-align: center; font-family: var(--fonte-mono); font-size: 28px; color: #6E6E68; }
+</style>
+</head>
+<body>
+<div id="stage">
+  <!-- Cena 1: gancho (as frases vêm de R.gancho no cena.js) -->
+  <div class="scene" id="s1"></div>
+
+  <!-- Cena 2: título -->
+  <div class="scene" id="s2">
+    <div id="redwipe"></div>
+    <div id="s2grupo">
+      <div id="apresentando"></div>
+      <div id="lockTitulo"></div>
+      <div id="selo"></div>
+    </div>
+    <div id="cobre"><div class="pontos"></div></div>
+  </div>
+
+  <!-- Cena 3: demonstração -->
+  <div class="scene" id="demo">
+    <div class="pontos"></div>
+    <div id="win">
+      <div class="chrome">
+        <i class="dot" style="left:20px"></i><i class="dot" style="left:42px"></i><i class="dot" style="left:64px"></i>
+        <div id="urlpill"><svg class="ic" id="urllock"><use href="#i-lock"/></svg><span id="urltxt"></span><span id="caret"></span></div>
+        <div id="urlbar"></div>
+      </div>
+      <div class="content">
+        <div id="pagina">
+          <div class="pg-header">suamarca</div>
+          <div class="pg-card">
+            <div class="pg-kicker">Novidade</div>
+            <div class="pg-h" id="pgTitulo"></div>
+            <div class="pg-sub" id="pgSub"></div>
+            <div id="pgBotao"></div>
+          </div>
+        </div>
+        <div id="bigurl"><span id="bigtxt"></span><span id="bigcaret"></span></div>
+        <div id="toast"><i><svg class="ic"><use href="#i-check"/></svg></i><span id="toastTxt"></span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Cena 4: rajada -->
+  <div class="scene" id="s6">
+    <div id="blzHolder"></div>
+    <div id="blzTag"></div>
+    <div id="blzDots"></div>
+  </div>
+
+  <!-- Cena 5: fechamento -->
+  <div class="scene" id="s7">
+    <div id="endLock"></div>
+    <div id="endUrl"></div>
+  </div>
+
+  <canvas id="fx" width="1920" height="1080"></canvas>
+  <svg id="cursor" viewBox="0 0 34 44"><path d="M3 3 L3 34 L11 26.5 L16.5 39 L22 36.6 L16.6 24.4 L27.5 24.4 Z" fill="#121212" stroke="#fff" stroke-width="2.6" stroke-linejoin="round"/></svg>
+  <div id="rings"></div>
+  <div id="fade"></div>
+</div>
+
+<script src="tempos.js"></script>
+<script src="marca.js"></script>
+<script src="motor/icones.js"></script>
+<script src="motor/motor.js"></script>
+<script src="cena.js"></script>
+</body>
+</html>

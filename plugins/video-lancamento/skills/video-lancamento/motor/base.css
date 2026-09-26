@@ -1,0 +1,45 @@
+/* Estilos base do motor de vídeo: palco, tokens da marca, legendas, cursor, efeitos.
+   As cores e fontes vêm do kit da marca (marca.css do projeto), que redefine estes tokens. */
+:root {
+  --escuro: #16161A;
+  --claro: #F2F1EE;
+  --destaque: #2F5BFF;
+  --cinza: #6E6E68;
+  --borda: #E0E0DA;
+  --fonte-titulo: 'Archivo', system-ui, sans-serif;
+  --fonte-mono: 'JetBrains Mono', ui-monospace, monospace;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; background: #000; }
+#stage {
+  position: relative; width: 1920px; height: 1080px; overflow: hidden;
+  background: var(--claro); color: var(--escuro);
+  font-family: var(--fonte-titulo); -webkit-font-smoothing: antialiased;
+}
+.scene { position: absolute; inset: 0; display: none; }
+.abs { position: absolute; }
+svg.ic { width: 24px; height: 24px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.pontos { position: absolute; inset: 0; background-image: radial-gradient(rgba(0,0,0,.12) 1.6px, transparent 1.7px); background-size: 28px 28px; }
+/* legendas com palavras que sobem de uma máscara */
+.cap { position: absolute; font-weight: 800; letter-spacing: -0.03em; line-height: 1.02; white-space: nowrap; }
+.cap .w { display: inline-block; overflow: hidden; vertical-align: top; padding: 0 0.02em 0.12em; margin-bottom: -0.12em; }
+.cap .w > span { display: inline-block; }
+.cap .acc { color: var(--destaque); }
+/* cursor e anéis de clique */
+#cursor { position: absolute; left: 0; top: 0; width: 34px; height: 44px; transform-origin: 3px 3px; filter: drop-shadow(0 4px 6px rgba(0,0,0,.25)); display: none; z-index: 50; }
+.ring { position: absolute; width: 60px; height: 60px; margin: -30px 0 0 -30px; border-radius: 50%; border: 3px solid var(--destaque); opacity: 0; z-index: 49; }
+#fx { position: absolute; left: 0; top: 0; z-index: 40; pointer-events: none; }
+#fade { position: absolute; inset: 0; background: #000; opacity: 0; z-index: 100; }
+/* assinatura: logo da marca (imagem do kit) ou, sem imagem, um selo com a inicial + o nome em texto.
+   O nome do produto vai pequeno embaixo, à direita. O elemento ocupa a largura toda e centraliza a caixa. */
+.assinatura { position: absolute; left: 0; right: 0; display: flex; justify-content: center; }
+.as-caixa { position: relative; }
+.as-caixa img { position: absolute; left: 0; top: 0; width: 100%; height: 100%; }
+.assinatura.branca .as-caixa img { filter: brightness(0) invert(1); }
+.as-texto { display: flex; align-items: center; gap: .28em; font-family: var(--fonte-titulo); font-weight: 900; letter-spacing: -0.045em; line-height: 1; color: var(--escuro); white-space: nowrap; }
+.as-texto .as-marca { width: 1.05em; height: 1.05em; border-radius: 50%; background: var(--destaque); color: #fff; display: inline-flex; align-items: center; justify-content: center; font-size: .82em; letter-spacing: 0; }
+.as-texto .as-nome { display: inline-block; padding-right: .04em; }
+.assinatura.branca .as-texto { color: #fff; }
+.assinatura.branca .as-texto .as-marca { background: #fff; color: var(--escuro); }
+.as-prod { position: absolute; right: 0.6%; top: 100%; margin-top: 0.06em; font-family: var(--fonte-titulo); font-weight: 800; letter-spacing: -0.02em; line-height: 1; white-space: nowrap; }
+.as-prod span { display: inline-block; }
