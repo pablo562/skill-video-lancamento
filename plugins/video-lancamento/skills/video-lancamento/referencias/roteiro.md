@@ -22,6 +22,7 @@ Vídeo sem narração pode ir a 45 a 50 s. Ritmo que dá para ler: cada frase ou
 - **Mostre, não afirme.** Se a novidade é rápida, mostre o antes e o depois no tempo do vídeo; não escreva "é rápido".
 - **Rajada:** só recursos que existem hoje, nomeados como aparecem no produto. Ícones em `motor/icones.js`.
 - **Fechamento:** o nome, uma frase que fica na cabeça, o logo e o site. Retome algo do gancho.
+- **Um público só.** Defina com quem o vídeo fala (quem vende, quem compra, quem decide) e confira frase por frase quem é o "você". O que muda para o outro lado entra como ganho dessa pessoa ("quem compra acha seu produto mais fácil"). Também não mostre anúncio, outdoor ou mídia que a empresa não faz pelo cliente: soa como promessa.
 - **Tom:** o da marca com o cliente dela. Humor leve e concreto (uma marca fictícia com mascote, estampa que vira carimbo, confete no "tá no ar") funciona melhor que adjetivo.
 
 ## Regras de copy

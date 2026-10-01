@@ -1,6 +1,6 @@
 {
   "name": "video-lancamento",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Vídeos curtos de lançamento de produto (16:9 ou 9:16, com ou sem narração) feitos com JavaScript, Playwright e ffmpeg, com trilha sintetizada.",
   "author": {
     "name": "Pablo Fernandes"

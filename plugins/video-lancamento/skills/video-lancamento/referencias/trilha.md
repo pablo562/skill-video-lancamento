@@ -12,6 +12,71 @@ S.exportar(path.join(__dirname, 'out', 'trilha.wav'));
 
 A mesma semente e a mesma ordem de chamadas geram o mesmo WAV, byte a byte.
 
+## Estilos e rodízio (`motor/estilos.js`)
+
+Se todo vídeo usar a mesma cama, todos soam iguais. O `motor/estilos.js` estende o sintetizador sem mexer nele (as camas antigas continuam idênticas byte a byte) e traz um cardápio de estilos, cada um com tom, acordes, instrumentos e desenho rítmico próprios. O acorde é escrito por nome (`F#m9`, `Bbmaj7`, `E7#9`, `A13`, `C7sus4`, `C/E`) e as vozes andam o mínimo de um acorde para o outro.
+
+```js
+const S = require('./motor/estilos.js')(T);
+const ESTILO = process.env.ESTILO || 'bossa';
+const cama = S.cama(ESTILO, { compassos, entrada: T.drop, quebra, pausa, filtro, fim: T.marcaFim, final: T.marcaFim });
+S.pluck(t, cama.nota(72)); // efeito com altura sempre por cama.nota(): leva o Dó do efeito para o tom do estilo
+S.exportar(arq, { fadeOut: 1.2, lufs: -14 }); // mede com ebur128, ajusta o volume integrado e limita o pico
+```
+
+| Estilo | BPM | Registro | Clima | Tom e acordes padrão |
+|---|---|---|---|---|
+| `bossa` | 110 a 124 | premium | violão na batida de bossa, aro na clave, ganzá, surdo, baixo de dedo; `eletronico: true` põe bumbo 4/4 discreto | Ré: Em9 A13 Dmaj9 B7b9 |
+| `disco` | 116 a 124 | divertido | guitarra abafada em semicolcheias, baixo em oitavas, cordas, metais antecipando | Mi dórico: Em9 A9 Em9 A9 Cmaj9 Bm7 Am9 B7#9 |
+| `afro` | 112 a 122 | os dois | ganzá com suingue, congas, piano elétrico no contratempo, log drum, marimba | Fá menor: Fm9 Dbmaj9 Bbm9 C7sus4 |
+| `synthwave` | 100 a 118 | os dois | bumbo no 1 e 3, caixa com gate, baixo galopando, cordas largas, arpejo com eco | Fá# menor: F#m D A E |
+| `funk` | 125 a 130 | divertido | tamborzão com 808 e tambor, palma no 2 e 4, gancho de voz sintética | Sol menor: Gm Gm Eb F |
+| `piano` | 60 a 90 | calmo | piano de feltro, oitava no grave, cordas lentas; sem bateria | Mi bemol: Ebmaj9 Bb/D Cm9 Abmaj9 |
+| `violao` | 76 a 104 | calmo | violão dedilhado, ganzá, vassourinha, bumbo macio, baixo de dedo | Sol: G D/F# Em7 Cmaj7 |
+| `kalimba` | 80 a 104 | calmo | ostinato de kalimba com respiros, pad morno, aro no 3, bumbo macio | Mi: Emaj7 C#m7 Amaj7 B6 |
+| `bossa-calma` | 90 a 118 | calmo | a bossa sem bumbo eletrônico: violão, aro, ganzá e surdo | Fá: Gm9 C13 Fmaj9 D7b9 |
+| `house`, `pop`, `lofi` | como as camas antigas | lo-fi é calmo | as camas antigas, pelo mesmo `S.cama` | Dó |
+
+Estilos calmos usam um bumbo macio que não entra no sidechain. Numa grade rápida (vídeo cortado a 120 BPM), o piano e a kalimba soam em meio tempo; eles funcionam melhor em vídeos cortados a 70 a 100 BPM.
+
+**Como escolher:**
+
+| Vídeo | Energia | Estilos | Andamento |
+|---|---|---|---|
+| Lançamento de recurso ou produto, anúncio, Reels, rajada de recursos | agitado | bossa, disco, afro, synthwave, funk, house, pop | 115 a 130 BPM |
+| Institucional, premium, manifesto, tutorial, vídeo com narração | calmo | piano, violão, kalimba, bossa calma, lo-fi | 70 a 100 BPM |
+
+- **Rodízio:** cada vídeo novo usa estilo, tom e acordes diferentes dos três últimos. Anote cada vídeo em `referencias/trilhas-usadas.md`, com a reação de quem pediu.
+- **Andamento antes do roteiro:** a energia define o BPM, e o BPM define o corte do vídeo inteiro (`tempos.js`).
+- **Lançamento pede música animada.** Uma trilha calma num anúncio de lançamento tende a ser recusada.
+- **Opções comuns de `S.cama`:**
+  - `acorde(b)` devolve o NOME do acorde do compasso;
+  - `tom` transpõe tudo em semitons;
+  - `entrada` marca onde entram bateria e grave;
+  - `quebra(t)` tira bumbo e grave;
+  - `pausa(t)` silencia a batida;
+  - `filtro(t)` (0 a 1) controla o brilho da harmonia;
+  - `fim` resolve na tônica a partir desse instante;
+  - `final` toca o acorde longo do fechamento.
+- **Não deixe a introdução de um lançamento muito tempo sem bumbo.** Com a `entrada` no drop dos 10 s, a introdução fica uns 10 dB abaixo do corpo. Ponha a `entrada` nos primeiros segundos, ou some bumbo, chimbal e palma à mão até ela, e marque o drop com um tempo de `pausa`, crash e metais.
+- **Quebra pelo índice do compasso** (`Math.floor(t / C + 1e-3) === n`), não por comparação de segundos. Um arredondamento de 2 ms joga a quebra um compasso para o lado.
+- **Instrumentos soltos:**
+  - `S.corda` e `S.rasgado` (violão e guitarra por Karplus-Strong);
+  - `S.baixoDedo`, `S.metais`, `S.cordas`, `S.marimba`, `S.logDrum`;
+  - `S.conga`, `S.tamborim`, `S.agogo`, `S.surdo`, `S.aro`;
+  - `S.caixa80`, `S.lead`, `S.voz(t, midi, dur, 'a'|'o'|'e'|'u')`;
+  - `S.piano`, `S.kalimba`, `S.vassoura`, `S.bumboMacio`.
+
+**Alternativas sem novo render:** o `trilha.js` do modelo aceita `ESTILO=<estilo>` e grava `out/trilha-<estilo>.wav` no mesmo volume. `node motor/alternativas.js afro bossa [--trecho 4 14]` monta `out/<saida>-<estilo>.mp4` com a mesma imagem (`-c:v copy`) e `out/vitrine-trilhas.mp4`, com 10 s de cada trilha em sequência. Na entrega, mande duas alternativas: uma com a mesma energia e uma com a outra.
+
+**Cardápio audível:** `node motor/cardapio.js piano violao kalimba bossa-calma lofi [--segundos 16]` toca cada estilo sozinho no andamento natural dele, com uma cartela de nome, clima e BPM, em `out/cardapio.mp4`. Serve para escolher de ouvido antes de começar.
+
+**Curva de energia sem ouvir:** meça cada trecho. Num lançamento, a introdução fica até uns 3 dB abaixo do corpo, e a quebra de 6 a 7 dB abaixo.
+
+```bash
+for par in 0:4 4:10 10:32 32:36 36:40; do a=${par%%:*}; b=${par##*:}; printf "%s a %s s:" $a $b; ffmpeg -hide_banner -nostats -ss $a -to $b -i out/trilha.wav -af ebur128 -f null - 2>&1 | grep -E "^\s+I:"; done
+```
+
 ## Cama musical: `S.groove(opções)`
 
 | Opção | O que faz |

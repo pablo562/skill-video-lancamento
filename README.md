@@ -43,10 +43,11 @@ npm run render    # trilha + vídeo em out/meu-video.mp4
 
 ## O que tem
 
-- `motor/`: motor de cenas, legendas, cursor, confete e assinatura da marca; render com prévia e folha de contato; sintetizador com camas pop, lo-fi, house e trap.
+- `motor/`: motor de cenas, legendas, cursor, confete e assinatura da marca; render com prévia e folha de contato; sintetizador com camas pop, lo-fi, house e trap, e um cardápio de 9 estilos de trilha (bossa, disco, afro, synthwave, funk, piano, violão, kalimba, bossa calma) em qualquer tom, com acordes por nome. `alternativas.js` monta a mesma imagem com outras trilhas sem novo render, e `cardapio.js` toca cada estilo sozinho para escolher de ouvido.
 - `modelo/`: projeto inicial de 36 s que já renderiza.
 - `narracao/`: voz por API, importação de voz gravada com alinhamento por palavra, mixagem com sidechain.
-- `referencias/`: roteiro, acabamento premium (resumo do framework de @leomeethewoo, com link para o artigo), técnicas prontas, trilha e narração.
+- `scripts/guias.sh`: guias do Reels (recorte 3:4 da grade do perfil e faixa segura do texto) sobre a folha de contato.
+- `referencias/`: roteiro, acabamento premium (resumo do framework de @leomeethewoo, com link para o artigo), técnicas prontas, trilha (com o rodízio de estilos), registro das trilhas usadas e narração.
 
 ## Licença
 
