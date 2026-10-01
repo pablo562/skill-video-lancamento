@@ -2,9 +2,11 @@
 
 Skill do Claude Code para criar vídeos curtos de lançamento de produto ou recurso (30 a 50 s, 16:9 ou vertical 9:16, com ou sem narração) só com JavaScript, Playwright e ffmpeg. Cada quadro é função pura do tempo, a trilha é sintetizada em JavaScript (sem samples) e o resultado é um MP4 H.264 com áudio, igual a cada render.
 
-*A Claude Code skill for short product-launch videos (16:9 or 9:16, optional narration) made with JavaScript, Playwright and ffmpeg, with a synthesized soundtrack. Docs are in Brazilian Portuguese.*
+*A Claude Code skill (also works in Codex and other terminal agents that read `SKILL.md`) for short product-launch videos (16:9 or 9:16, optional narration) made with JavaScript, Playwright and ffmpeg, with a synthesized soundtrack. Docs are in Brazilian Portuguese.*
 
 ## Instalar
+
+### Claude Code
 
 Como plugin (recebe atualizações):
 
@@ -14,6 +16,32 @@ Como plugin (recebe atualizações):
 ```
 
 Ou copie a pasta `plugins/video-lancamento/skills/video-lancamento/` para `~/.claude/skills/` (vale em todos os seus projetos) ou para `.claude/skills/` de um repositório (vale só nele).
+
+Para atualizar depois:
+
+```
+claude plugin marketplace update video-lancamento
+claude plugin update video-lancamento@video-lancamento
+```
+
+### Codex
+
+A skill é uma pasta com `SKILL.md` e scripts de Node e ffmpeg, no formato que o Codex também lê (de `~/.codex/skills`). Três jeitos:
+
+1. Peça ao próprio Codex, que tem um instalador de skills embutido: "instala a skill https://github.com/pablo562/skill-video-lancamento/tree/main/plugins/video-lancamento/skills/video-lancamento". Depois abra uma sessão nova.
+2. No terminal:
+
+   ```bash
+   git clone --depth 1 https://github.com/pablo562/skill-video-lancamento ~/skill-video-lancamento
+   mkdir -p ~/.codex/skills
+   cp -R ~/skill-video-lancamento/plugins/video-lancamento/skills/video-lancamento ~/.codex/skills/
+   ```
+
+3. Em vários agentes de uma vez (Claude Code, Codex, Cursor e outros), com o instalador [skills](https://github.com/vercel-labs/skills): `npx skills add pablo562/skill-video-lancamento`. Ele pergunta em quais agentes instalar.
+
+### Outros agentes
+
+Qualquer agente de terminal que rode comandos na sua máquina serve: baixe o repositório e peça "leia `plugins/video-lancamento/skills/video-lancamento/SKILL.md` e siga". Assistentes que rodam só no navegador (ChatGPT, Claude.ai) não servem, porque a skill precisa executar o Chrome e o ffmpeg localmente.
 
 ## Requisitos
 
